@@ -24,7 +24,14 @@ dependencies:
 - servant-server
 - wai
 - warp
-
+- persistent
+- persistent-postgresql
+- persistent-template
+- text
+- time
+- monad-logger
+- transformers
+- mtl
 library:
   source-dirs: src
 
