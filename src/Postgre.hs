@@ -10,11 +10,16 @@ import Data.Int (Int64)
 import Control.Monad.Reader (runReaderT)
 
 
-getRoom :: ConnectionPool -> Int64 -> IO (Maybe Room)
-getRoom pool key = runSqlPool (get (toSqlKey key)) pool
 
 insertRoom :: ConnectionPool -> Room -> IO Int64
 insertRoom pool room = fromSqlKey <$> runSqlPool (insert room) pool
 
-insertMessage :: (MonadIO m) => Message -> SqlPersistT m (Key Message)
-insertMessage = insert
+insertMessage :: ConnectionPool -> Message -> IO Int64
+insertMessage pool message = fromSqlKey <$> runSqlPool (insert message) pool
+
+insertUser :: ConnectionPool -> User -> IO Int64
+insertUser pool user = fromSqlKey <$> runSqlPool (insert user) pool
+
+
+getRoom :: ConnectionPool -> Int64 -> IO (Maybe Room)
+getRoom pool key = runSqlPool (get (toSqlKey key)) pool

@@ -23,14 +23,22 @@ import Data.Aeson.TH
 
 
 PTH.share [PTH.mkPersist PTH.sqlSettings, PTH.mkMigrate "migrateAll"] [PTH.persistLowerCase|
+    User
+      name Text
+      created UTCTime default=CURRENT_TIME
+      deriving Show Read
     Room
       name Text
+      created UTCTime default=CURRENT_TIME
       deriving Show Read
    Message
       text Text
-      created UTCTime
+      created UTCTime default=CURRENT_TIME
+      roomId RoomId
+      userId UserId
       deriving Show Read
 |]
 
+$(deriveJSON defaultOptions ''User)
 $(deriveJSON defaultOptions ''Room)
 $(deriveJSON defaultOptions ''Message)

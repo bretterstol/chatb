@@ -17,8 +17,7 @@ connString = "host=127.0.0.1 port=5432 user=unicorn_user dbname=chatb password=m
 
 main :: IO ()
 main = runStdoutLoggingT $ withPostgresqlPool connString 10 $ \pool -> liftIO $ do
-    flip runSqlPersistMPool pool $ do
+    _ <- flip runSqlPersistMPool pool $ do
       runMigration migrateAll
-      insert $ Room "Test" 
     startApp pool
 
